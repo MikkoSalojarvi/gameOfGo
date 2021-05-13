@@ -23,7 +23,7 @@ public:
     void kivenAsetus();
     void naapurit(QPushButton*);
     bool kaappaus(QPushButton*);
-    void vaihdaPelaaja();
+    void vaihdaPelaaja(QPushButton*);
 
 private slots:
     void on_btnQuit_clicked();
@@ -40,6 +40,7 @@ private:
     QPushButton *button3;
     QString pelattu;
     int boardSize;
+
 };
 
 #endif // LAUTA_H

@@ -35,6 +35,7 @@ void lauta::createLayout(int koko)
                 btn->QPushButton::setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
                 btn->setObjectName(QString::number(nimet));
                 btn->setMinimumWidth(2);
+                btn->setStyleSheet("QPushButton{background:transparent;}");
                 connect(btn, &QPushButton::clicked, this, &lauta::kivenAsetus);
                 ui->ristikko->setColumnMinimumWidth(j,2);
                 paikat.append(btn);
@@ -58,7 +59,7 @@ void lauta::kivenAsetus()
                 if (ptr->text()!="musta"&&ptr->text()!="valkea")
                 {
                     ptr->setText(pelaaja);
-                    vaihdaPelaaja();
+                    vaihdaPelaaja(ptr);
                 }
             }
     }
@@ -89,21 +90,25 @@ void lauta::naapurit(QPushButton * kivi)   // hae naapurit findchild, nimet +1,-
     if (olemassa[0]){
     if (kaappaus(button0))      // tarkistetaan onko vapauksia, lisää varmistus että on olemassa
     {
+        button0->setStyleSheet("QPushButton{background:transparent;}");
         button0->setText("kuoli");
     }}
     if (olemassa[1]){
     if (kaappaus(button1))
     {
+        button1->setStyleSheet("QPushButton{background:transparent;}");
         button1->setText("kuoli");
     }}
     if (olemassa[2]){
     if (kaappaus(button2))
     {
+        button2->setStyleSheet("QPushButton{background:transparent;}");
         button2->setText("kuoli");
     }}
     if (olemassa[3]){
     if (kaappaus(button3))
     {
+        button3->setStyleSheet("QPushButton{background:transparent;}");
         button3->setText("kuoli");
     }}
 
@@ -151,14 +156,18 @@ bool lauta::kaappaus(QPushButton * uhri)   // tutkii onko naapuri vihollisen kiv
     else return 0;
 }
 
-void lauta::vaihdaPelaaja()
+void lauta::vaihdaPelaaja(QPushButton* pointer)
 {
     if (pelaaja == "musta")
     {
+       pointer->setStyleSheet("background-image: url(:/pictures/mustaKivi.png);");
+
        pelaaja= "valkea";
        vastustaja="musta";
     }
     else {
+        pointer->setStyleSheet(QString::fromUtf8("background-image: url(:/pictures/valkeaKivi.png);"));
+
         pelaaja= "musta";
         vastustaja="valkea";
     }
