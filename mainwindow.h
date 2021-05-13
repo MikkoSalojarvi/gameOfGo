@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QGridLayout>
 
+#include "lauta.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,12 +19,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void kivenAsetus();
-    void vaihdaPelaaja();
-    void createLayout();
-    virtual void naapurit(QPushButton*);
-    void naapurit(QPushButton*,QPushButton*,QPushButton*,QPushButton*);
-    bool kaappaus(QPushButton*);
 private slots:
 
     //void map();
@@ -50,5 +46,6 @@ private:
     QPushButton *button2;
     QPushButton *button3;
     QString pelattu;
+    lauta * oLauta;
 };
 #endif // MAINWINDOW_H

@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pictures/board.jpg</file>
+        <file>pictures/mustaKivi.png</file>
+        <file>pictures/valkeaKivi.png</file>
+    </qresource>
+</RCC>
