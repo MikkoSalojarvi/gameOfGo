@@ -7,6 +7,7 @@
 #include <QVector>
 #include <QDebug>
 #include <QPixmap>
+#include <QPainter>
 
 namespace Ui {
 class lauta;
@@ -25,6 +26,8 @@ public:
     bool kaappaus(QPushButton*);
     void vaihdaPelaaja(QPushButton*);
 
+protected:
+
 private slots:
     void on_btnQuit_clicked();
 
@@ -40,6 +43,7 @@ private:
     QPushButton *button3;
     QString pelattu;
     int boardSize;
+
 
 };
 

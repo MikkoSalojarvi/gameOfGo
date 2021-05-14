@@ -6,7 +6,6 @@ lauta::lauta(QWidget *parent) :
     ui(new Ui::lauta)
 {
     ui->setupUi(this);
-    //this->showMaximized();
 
 }
 
@@ -19,30 +18,46 @@ lauta::~lauta()
 void lauta::createLayout(int koko)
 {
     boardSize=koko;
+    QSize btnSize;
+    if (koko ==19)
+    {
+        btnSize=QSize(60,60);
+        this->resize(1100,1400);
+    }
+    else if(koko==13)
+    {
+        btnSize=QSize(75,75);
+        this->resize(1000,1000);
+    }
+    else if(koko==9)
+    {
+        btnSize=QSize(100,100);
+        this->resize(900,900);
+    }
     QPixmap tausta(":/pictures/board.jpg");
     tausta =tausta.scaled(this->size(),Qt::IgnoreAspectRatio);
     QPalette paletti;
     paletti.setBrush(QPalette::Window, tausta);
     this->setPalette(paletti);
     int nimet=1;
-        for(int i=1; i <= boardSize; i++){
-            for(int j=1; j <= boardSize; j++){
-                QString teksti=QString::number(i);
-                teksti.append(" "+QString::number(j));
-                ui->ristikko->addWidget(new QPushButton(teksti, this),i,j,Qt::Alignment(Qt::AlignLeft));
-                QLayoutItem* item = ui->ristikko->itemAtPosition(i, j);
-                QPushButton* btn = qobject_cast<QPushButton *>(item->widget());
-                btn->QPushButton::setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-                btn->setObjectName(QString::number(nimet));
-                btn->setMinimumWidth(2);
-                btn->setStyleSheet("QPushButton{background:transparent;}");
-                connect(btn, &QPushButton::clicked, this, &lauta::kivenAsetus);
-                ui->ristikko->setColumnMinimumWidth(j,2);
-                paikat.append(btn);
-                btn->setMaximumWidth(500);
-                nimet++;
+    for(int i=1; i <= boardSize; i++){
+        for(int j=1; j <= boardSize; j++){
+            QString teksti=QString::number(i);
+            teksti.append(" "+QString::number(j));
+            ui->ristikko->addWidget(new QPushButton(" ", this),i,j,Qt::Alignment(Qt::AlignLeft));
+            QLayoutItem* item = ui->ristikko->itemAtPosition(i, j);
+            QPushButton* btn = qobject_cast<QPushButton *>(item->widget());
+            //btn->QPushButton::setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+            btn->setObjectName(QString::number(nimet));
+            btn->setFixedSize(btnSize);
+            btn->setStyleSheet("QPushButton{background:transparent;}");
+            connect(btn, &QPushButton::clicked, this, &lauta::kivenAsetus);
+            //ui->ristikko->setColumnMinimumWidth(j,2);
+            paikat.append(btn);
+            ui->ristikko->setSpacing(0);
+            nimet++;
             }
-        ui->ristikko->setRowMinimumHeight(i,10);
+        //ui->ristikko->setRowMinimumHeight(i,10);
         }
 }
 
@@ -59,6 +74,7 @@ void lauta::kivenAsetus()
                 if (ptr->text()!="musta"&&ptr->text()!="valkea")
                 {
                     ptr->setText(pelaaja);
+                    ptr->setStyleSheet("QPushButton{color:rgb(155, 0, 55);}");
                     vaihdaPelaaja(ptr);
                 }
             }
@@ -160,14 +176,12 @@ void lauta::vaihdaPelaaja(QPushButton* pointer)
 {
     if (pelaaja == "musta")
     {
-       pointer->setStyleSheet("background-image: url(:/pictures/mustaKivi.png);");
-
-       pelaaja= "valkea";
-       vastustaja="musta";
+        pointer->setStyleSheet("border-image: url(:/pictures/musta1Vara1.png) 0 0 0 0 stretch stretch;");
+        pelaaja= "valkea";
+        vastustaja="musta";
     }
     else {
-        pointer->setStyleSheet(QString::fromUtf8("background-image: url(:/pictures/valkeaKivi.png);"));
-
+        pointer->setStyleSheet("border-image: url(:/pictures/valkea1.png) 0 0 0 0 stretch stretch;");
         pelaaja= "musta";
         vastustaja="valkea";
     }

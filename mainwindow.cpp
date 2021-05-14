@@ -13,11 +13,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onClicked()
-{
-    this->close();
-}
-
 void MainWindow::on_btnSmallBoard_clicked()
 {
     boardSize=9;
