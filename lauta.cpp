@@ -49,6 +49,12 @@ void lauta::createLayout(int koko)
             QPushButton* btn = qobject_cast<QPushButton *>(item->widget());
             //btn->QPushButton::setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
             btn->setObjectName(QString::number(nimet));
+            QPalette pal2= btn->palette();
+            QColor lasi;
+            lasi.setAlpha(0);
+            lasi.setAlphaF(0);
+            pal2.setColor(QPalette::ButtonText,lasi);
+            btn->setPalette(pal2);
             btn->setFixedSize(btnSize);
             btn->setStyleSheet("QPushButton{background:transparent;}");
             connect(btn, &QPushButton::clicked, this, &lauta::kivenAsetus);
