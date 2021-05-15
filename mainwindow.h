@@ -27,6 +27,8 @@ private slots:
 
     void on_btnNormalBoard_clicked();
 
+    void on_btnQuit_clicked();
+
 signals:
     void digitClicked(int);
 private:

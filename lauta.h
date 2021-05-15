@@ -7,7 +7,6 @@
 #include <QVector>
 #include <QDebug>
 #include <QPixmap>
-#include <QPainter>
 
 namespace Ui {
 class lauta;
@@ -22,7 +21,7 @@ public:
     ~lauta();
     void createLayout(int);
     void kivenAsetus();
-    void naapurit(QPushButton*);
+    bool naapurit(QPushButton*);
     bool kaappaus(QPushButton*);
     void vaihdaPelaaja(QPushButton*);
 
@@ -31,10 +30,12 @@ protected:
 private slots:
     void on_btnQuit_clicked();
 
+    void on_btnPass_clicked();
+
 private:
     Ui::lauta *ui;
     QVector<QPushButton *> paikat;
-    QVector<QPushButton *> buttons;
+    //QVector<QPushButton *> buttons;
     QString pelaaja="musta";
     QString vastustaja="valkea";
     QPushButton *button0;
@@ -43,8 +44,6 @@ private:
     QPushButton *button3;
     QString pelattu;
     int boardSize;
-
-
 };
 
 #endif // LAUTA_H

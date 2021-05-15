@@ -39,3 +39,8 @@ void MainWindow::on_btnNormalBoard_clicked()
     oLauta->exec();
     oLauta->deleteLater();
 }
+
+void MainWindow::on_btnQuit_clicked()
+{
+    this->close();
+}

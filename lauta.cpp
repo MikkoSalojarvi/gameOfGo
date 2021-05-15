@@ -39,11 +39,11 @@ void lauta::createLayout(int koko)
     QPalette paletti;
     paletti.setBrush(QPalette::Window, tausta);
     this->setPalette(paletti);
-    int nimet=1;
+    int nimet=1;                // voisi olla taulu kivet, jossa [nimi, tila(tyhjä/musta/valkea)]?
     for(int i=1; i <= boardSize; i++){
         for(int j=1; j <= boardSize; j++){
-            QString teksti=QString::number(i);
-            teksti.append(" "+QString::number(j));
+//            QString teksti=QString::number(i);
+//            teksti.append(" "+QString::number(j));
             ui->ristikko->addWidget(new QPushButton(" ", this),i,j,Qt::Alignment(Qt::AlignLeft));
             QLayoutItem* item = ui->ristikko->itemAtPosition(i, j);
             QPushButton* btn = qobject_cast<QPushButton *>(item->widget());
@@ -68,66 +68,107 @@ void lauta::kivenAsetus()
     foreach(QPushButton * ptr, paikat)
     {
         if(ptr ->objectName() == paikka)
-            {
+        {
             pelattu=ptr->objectName();
-            naapurit(ptr);// hae naapurit findchild, nimet +1,-1,+9,-9
+            if (naapurit(ptr))// hae naapurit findchild, nimet +1,-1,+9,-9
+            {
                 if (ptr->text()!="musta"&&ptr->text()!="valkea")
                 {
+//                    QString nimi = ptr->objectName();
+//                    nimi.append(pelaaja);
+//                    ptr->setObjectName(nimi);
                     ptr->setText(pelaaja);
                     ptr->setStyleSheet("QPushButton{color:rgb(155, 0, 55);}");
                     vaihdaPelaaja(ptr);
                 }
             }
+        }
     }
 }
 
-void lauta::naapurit(QPushButton * kivi)   // hae naapurit findchild, nimet +1,-1,+9,-9
+bool lauta::naapurit(QPushButton * kivi)   // hae naapurit findchild, nimet +1,-1,+9,-9
 {
     QString nimi=kivi->objectName();
-    bool olemassa[4]={false,false,false,false};
-    if (nimi.toInt()%boardSize!=1){              // jos kivi ei ole vasemmassa reunassa
+    int omatVapaudet=4;
+    if (nimi.toInt()%boardSize!=1)
+    {              // jos kivi ei ole vasemmassa reunassa
         button0 = this->findChild<QPushButton *>(QString::number(nimi.toInt()-1));  //tehdään viittaus/haetaan nimi vasemmalla olevaan kiveen
-        olemassa[0]=true;
+        if (kaappaus(button0))      // tarkistetaan onko vapauksia
+        {
+            button0->setStyleSheet("QPushButton{background:transparent;}");
+            button0->setText("");
         }
-    if (nimi.toInt()%boardSize!=0){
+        if (button0->text()==vastustaja) omatVapaudet--; // jos tätä naapuria ei kaapattu ja se on vastustajan
+    }
+    else omatVapaudet--;
+    if (nimi.toInt()%boardSize!=0)
+    {
         button1 = this->findChild<QPushButton *>(QString::number(nimi.toInt()+1));
-        olemassa[1]=true;
-        }
+
+        if (kaappaus(button1))
+        {
+            button1->setStyleSheet("QPushButton{background:transparent;}");
+            button1->setText("");
+        }if (button1->text()==vastustaja) omatVapaudet--;
+    }
+    else omatVapaudet--;
     if (nimi.toInt()>boardSize){
         button2 = this->findChild<QPushButton *>(QString::number(nimi.toInt()-boardSize));
-        olemassa[2]=true;
+
+        if (kaappaus(button2))
+        {
+            button2->setStyleSheet("QPushButton{background:transparent;}");
+            button2->setText("");
+        }if (button2->text()==vastustaja) omatVapaudet--; // jos tätä naapuria ei kaapattu ja se on vastustajan
+
         }
+    else omatVapaudet--;
     if (nimi.toInt()<(boardSize*boardSize)-boardSize){
         button3 = this->findChild<QPushButton *>(QString::number(nimi.toInt()+boardSize));
-        olemassa[3]=true;
-        }
 
-       //naapurit(button0,button1,button2,button3); // kutsuu seuraavan naapurit, tarkistaa onko ne piiritetty
+        if (kaappaus(button3))
+        {
+            button3->setStyleSheet("QPushButton{background:transparent;}");
+            button3->setText("");
+        }if (button3->text()==vastustaja) omatVapaudet--; // jos tätä naapuria ei kaapattu ja se on vastustajan
+
+        }
+    else omatVapaudet--;
+/*  // vanha tapa varmistaa että on olemassa ja syödä tarvittaessa
     if (olemassa[0]){
-    if (kaappaus(button0))      // tarkistetaan onko vapauksia, lisää varmistus että on olemassa
+    if (kaappaus(button0))      // tarkistetaan onko vapauksia
     {
         button0->setStyleSheet("QPushButton{background:transparent;}");
-        button0->setText("kuoli");
-    }}
+        button0->setText("");
+    }
+    if (button0->text()==vastustaja) omatVapaudet--; // jos tätä naapuria ei kaapattu ja se on vastustajan
+    }
     if (olemassa[1]){
     if (kaappaus(button1))
     {
         button1->setStyleSheet("QPushButton{background:transparent;}");
-        button1->setText("kuoli");
-    }}
+        button1->setText("");
+    }if (button1->text()==vastustaja) omatVapaudet--; // jos tätä naapuria ei kaapattu ja se on vastustajan
+    }
     if (olemassa[2]){
     if (kaappaus(button2))
     {
         button2->setStyleSheet("QPushButton{background:transparent;}");
-        button2->setText("kuoli");
-    }}
+        button2->setText("");
+    }if (button2->text()==vastustaja) omatVapaudet--; // jos tätä naapuria ei kaapattu ja se on vastustajan
+    }
     if (olemassa[3]){
     if (kaappaus(button3))
     {
         button3->setStyleSheet("QPushButton{background:transparent;}");
-        button3->setText("kuoli");
-    }}
-
+        button3->setText("");
+    }if (button3->text()==vastustaja) omatVapaudet--; // jos tätä naapuria ei kaapattu ja se on vastustajan
+    }
+    */
+    if (omatVapaudet==0){ // jos omia vapauksia ei ole siirto on laiton ja mitään ei tapahdu
+        return 0;
+    }
+    return 1;
 }
 
 bool lauta::kaappaus(QPushButton * uhri)   // tutkii onko naapuri vihollisen kivi ja poistaa sen jos se on piiritetty
@@ -190,4 +231,23 @@ void lauta::vaihdaPelaaja(QPushButton* pointer)
 void lauta::on_btnQuit_clicked()
 {
     this->close();
+}
+
+void lauta::on_btnPass_clicked()
+{
+    if (pelattu!="pass"){
+        if (pelaaja == "musta")
+        {
+            pelaaja= "valkea";
+            vastustaja="musta";
+        }
+        else
+        {
+            pelaaja= "musta";
+            vastustaja="valkea";
+        }
+    }
+
+    pelattu="pass";
+    qDebug()<<pelattu;
 }
