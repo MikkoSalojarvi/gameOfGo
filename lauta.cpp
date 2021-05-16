@@ -40,7 +40,7 @@ void lauta::createLayout(int koko)
     paletti.setBrush(QPalette::Window, tausta);
     this->setPalette(paletti);
     int nimet=1;                // voisi olla taulu kivet, jossa [nimi, tila(tyhjä/musta/valkea)]?
-    for(int i=1; i <= boardSize; i++){
+    for(int i=1; i <= boardSize; i++){      // ei tarvi kun keksi miten saa tekstin pois...
         for(int j=1; j <= boardSize; j++){
 //            QString teksti=QString::number(i);
 //            teksti.append(" "+QString::number(j));
