@@ -7,6 +7,7 @@
 #include <QVector>
 #include <QDebug>
 #include <QPixmap>
+#include <QGenericMatrix>
 
 namespace Ui {
 class lauta;
@@ -22,8 +23,10 @@ public:
     void createLayout(int);
     void kivenAsetus();
     bool naapurit(QPushButton*);
+    void naapurit2(QPushButton*);
     bool kaappaus(QPushButton*);
     void vaihdaPelaaja(QPushButton*);
+    bool kasaKaappaus();
 
 protected:
 
@@ -44,6 +47,9 @@ private:
     QPushButton *button3;
     QString pelattu;
     int boardSize;
+    QVector<QString> kasa;
+    int viereisetKivet[4];
+    int counter=0;
 };
 
 #endif // LAUTA_H
