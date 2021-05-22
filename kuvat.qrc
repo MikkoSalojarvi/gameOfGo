@@ -1,12 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>pictures/board.jpg</file>
-        <file>pictures/mustaKivi.png</file>
-        <file>pictures/valkeaKivi.png</file>
-        <file>pictures/musta1.png</file>
-        <file>pictures/musta2.png</file>
-        <file>pictures/valkea1.png</file>
-        <file>pictures/valkea2.png</file>
-        <file>pictures/musta1Vara1.png</file>
+        <file>pictures/valkeaOma2.png</file>
+        <file>pictures/mustaOma2.png</file>
+        <file>pictures/goBoard9.png</file>
+        <file>pictures/goBoard13.png</file>
+        <file>pictures/goBoard19.png</file>
     </qresource>
 </RCC>

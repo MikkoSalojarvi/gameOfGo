@@ -7,7 +7,8 @@
 #include <QVector>
 #include <QDebug>
 #include <QPixmap>
-#include <QGenericMatrix>
+#include <QKeyEvent>
+#include <QGridLayout>
 
 namespace Ui {
 class lauta;
@@ -27,8 +28,12 @@ public:
     bool kaappaus(QPushButton*);
     void vaihdaPelaaja(QPushButton*);
     bool kasaKaappaus();
+    void passTurn();
+    bool omatKivet();
+    void paintEvent(QPaintEvent *);
 
 protected:
+void keyPressEvent(QKeyEvent *e);
 
 private slots:
     void on_btnQuit_clicked();
@@ -38,18 +43,14 @@ private slots:
 private:
     Ui::lauta *ui;
     QVector<QPushButton *> paikat;
-    //QVector<QPushButton *> buttons;
-    QString pelaaja="musta";
-    QString vastustaja="valkea";
-    QPushButton *button0;
-    QPushButton *button1;
-    QPushButton *button2;
-    QPushButton *button3;
+    QString pelaaja="musta";        // voisi vaihtaa pelaajan boolean, 0 valkea, 1 musta
+    QString vastustaja="valkea";    // jolloin etsittäessä vastustajan kiviä haetaan vain (!pelaaja)
     QString pelattu;
     int boardSize;
     QVector<QString> kasa;
+    QVector<QString> omaKasa;
     int viereisetKivet[4];
-    int counter=0;
+    QPixmap tausta;
 };
 
 #endif // LAUTA_H
