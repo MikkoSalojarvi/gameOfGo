@@ -6,9 +6,9 @@ passing
 piece graphics
 checking liberties for own group for move legality
 group eating
-
-do be done:
 board graphics
 - scaling and positioning according to buttons
 - better picture
+
+do be done:
 counting
