@@ -354,12 +354,72 @@ void lauta::passTurn()
             pelaaja= "musta";
             vastustaja="valkea";
         }
+        pelattu="pass";
     }
-    pelattu="pass";
-    qDebug()<< this->geometry();
+    else pisteLasku();
 }
 
-void lauta::paintEvent(QPaintEvent *)
+void lauta::pisteLasku()    // kiinalaiset pisteet, kaikki vangit kaapattava ennen laskua
 {
+    qDebug()<< "pistelasku alkaa";
+    kasa.clear();       // valkeat
+    omaKasa.clear();    // mustat
+    for (int i=1;i< (boardSize*boardSize+1);i++)
+    {
+        QPushButton *button = this->findChild<QPushButton *>(QString::number(i));
+        if (button->text()=="valkea")
+        {
+            kasa.append(button->objectName());
+        }
+        else if (button->text()=="musta")
+        {
+            omaKasa.append(button->objectName());
+        }
+        else if (!lasketut.contains(button)) // !tutkittava.contains turha tässä??
+        {
+            pisteet="";
+            pelaaja=alue(button);
+            if (pelaaja=="musta")
+            {   // lisätään alueen koko sen ympäröijän pisteisiin
+                ui->blackPoints->setText(QString::number( ui->blackPoints->text().toInt()+tutkittava.count() ));
+                foreach(QPushButton *button2, tutkittava)
+                    lasketut.append(button2);   // lisätään lasketut kivet, toistuvan laskennan estämiseksi
+            }
+            else if (pelaaja=="valkea")
+            {   // lisätään alueen koko sen ympäröijän pisteisiin
+                ui->whitePoints->setText(QString::number( ui->whitePoints->text().toInt()+tutkittava.count()));
+                foreach(QPushButton *button2, tutkittava)
+                    lasketut.append(button2);   // lisätään lasketut kivet, toistuvan laskennan estämiseksi
+            }
+            tutkittava.clear();
+        }
+    }
+    ui->whitePoints->setText(QString::number(ui->whitePoints->text().toInt()+omaKasa.count()+6.5+ui->whiteCaps->text().toInt()));
+    ui->blackPoints->setText(QString::number(ui->blackPoints->text().toInt()+kasa.count()+ui->blackCaps->text().toInt() ));
+}
 
+QString lauta::alue(QPushButton *nappi)// iteroiva funktio joka hakee alueen kaikki tyhjät ruudut, ja rajakiven värin
+{                                      // palauttaa värin jolle pisteet tulee, ja lisää tutkitut kivet laskettuihin
+    tutkittava.append(nappi);
+    naapurit2(nappi);
+    int viereisetKivet2[4];
+    for (int j=0;j<4;j++) viereisetKivet2[j]=viereisetKivet[j];
+    for(int i=0;i<4;i++)
+    {
+        if(viereisetKivet2[i]!=0)
+        {
+            QPushButton *button1 = this->findChild<QPushButton *>(QString::number(viereisetKivet2[i]));
+            if (button1->text()=="")
+            {
+                if (!tutkittava.contains(button1)&&!lasketut.contains(button1))alue(button1);
+            }
+            else
+            {
+                pisteet=button1->text();
+
+                qDebug()<<tutkittava.count()<<" pistettä "<< button1->text();
+            }
+        }
+    }
+    return pisteet;
 }

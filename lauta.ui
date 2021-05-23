@@ -13,10 +13,6 @@
   <property name="windowTitle">
    <string>Pelilauta</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>pictures/mustaKivi.png</normaloff>pictures/mustaKivi.png</iconset>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="ristikko"/>

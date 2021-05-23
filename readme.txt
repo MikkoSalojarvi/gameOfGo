@@ -6,9 +6,11 @@ passing
 piece graphics
 checking liberties for own group for move legality
 group eating
+counting chinese
 
 do be done:
 board graphics
 - scaling and positioning according to buttons
 - better picture
-counting
+kifu saving option
+counting japanese

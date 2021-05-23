@@ -30,7 +30,8 @@ public:
     bool kasaKaappaus();
     void passTurn();
     bool omatKivet();
-    void paintEvent(QPaintEvent *);
+    void pisteLasku();
+    QString alue(QPushButton*);
 
 protected:
 void keyPressEvent(QKeyEvent *e);
@@ -51,6 +52,9 @@ private:
     QVector<QString> omaKasa;
     int viereisetKivet[4];
     QPixmap tausta;
+    QVector<QPushButton *> tutkittava;
+    QVector<QPushButton *> lasketut;
+    QString pisteet="";
 };
 
 #endif // LAUTA_H
