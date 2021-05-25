@@ -9,8 +9,10 @@ group eating
 counting chinese
 
 do be done:
-board graphics
-- scaling and positioning according to buttons
-- better picture
+graphics
+- better board picture
+- stone opacity/status indicator while dead in scoring
 kifu saving option
-counting japanese
+counting with japanese rules
+- setting status of stones at scoring
+- finding lining living stones
